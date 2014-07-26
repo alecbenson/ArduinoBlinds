@@ -25,7 +25,7 @@ def checkTime():
 			removeAlarm(0)
 
 	#check the time again in 60 seconds
-	threading.Timer(1, checkTime).start()
+	threading.Timer(60, checkTime).start()
 
 #adds an alarm to the list of alarms
 def addAlarm(hour, minute):
