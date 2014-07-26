@@ -1,8 +1,8 @@
 import time
 import datetime
-import glob
 import threading
 from serial import Serial
+import glob
 
 alarmList = []
 
@@ -18,36 +18,21 @@ def checkTime():
 		nextAlarm = alarmList[0]
 		nextAlarmSplit = splitParsedTime(nextAlarm)
 
+		#If it is time to trigger the next alarm..
 		if compareTime(parsedTime, nextAlarm) >= 0:
 			print("Triggering alarm: " + nextAlarm)
-			triggerAlarm( nextAlarmSplit[0], nextAlarmSplit[1] )
+			triggerAlarm()
 			removeAlarm(0)
 
 	#check the time again in 60 seconds
-	threading.Timer(60, checkTime).start()
-
-#Sends a signal to the arduino that it needs to move
-def triggerAlarm(hour, minute):
-	port = glob.glob("/dev/ttyACM*")
-	print("Autodetected port " + port[0])
-	port = port[0]
-			
-	ser = Serial(port, 9600, timeout=1)
-	print("Successfully connected to: " + ser.portstr)
-	
-	#'a' tells the arduino to turn clockwise
-	ser.write('a')
-	print( parseTime(hour,minute) )
-	addAlarm(hour,minute)
-	return json.dumps(alarmList)
-	ser.close()
+	threading.Timer(1, checkTime).start()
 
 #adds an alarm to the list of alarms
 def addAlarm(hour, minute):
 	alarmTime = parseTime(hour,minute)
 	alarmList.append(alarmTime)
 	alarmList.sort(compareTime)
-	print(alarmList)
+	print("Added alarm with time " + alarmTime)
 
 #removes an alarm from the list of alarms
 def removeAlarm(index):
@@ -77,4 +62,16 @@ def compareTime(time1, time2):
 			return -1
 		else:
 			return 0
+
+#Sends a signal to the arduino that it needs to move
+def triggerAlarm():
+	port = glob.glob("/dev/ttyACM*")
+	port = port[0]
+	ser = Serial( port, 9600, timeout=1)
+
+	print("Sent trigger signal to: " + ser.portstr)
+	
+	#'a' tells the arduino to turn clockwise
+	ser.write('a')
+	ser.close()
 
