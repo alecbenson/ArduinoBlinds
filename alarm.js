@@ -9,7 +9,9 @@ function triggerBlind(){
 		url: "http://" + hostname + ":2234/",
 		data: {hour: setHour, minute: setMinute},
 		dataType: 'jsonp'
-	}).done( function() {
-		$('#confirm').text("Successfully executed python script");
+		success: function(result){
+			$('#confirm').append("Added alarm successfully!\n");
+			console.log(result);
+		}
 	});
 };

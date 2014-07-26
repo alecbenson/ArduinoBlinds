@@ -68,10 +68,9 @@ def triggerAlarm():
 	port = glob.glob("/dev/ttyACM*")
 	port = port[0]
 	ser = Serial( port, 9600, timeout=1)
-
 	print("Sent trigger signal to: " + ser.portstr)
-	
-	#'a' tells the arduino to turn clockwise
-	ser.write('a')
-	time.sleep(1)
 
+	time.sleep(1)
+	ser.write('b')
+
+	ser.close()
