@@ -73,5 +73,5 @@ def triggerAlarm():
 	
 	#'a' tells the arduino to turn clockwise
 	ser.write('a')
-	ser.close()
+	time.sleep(1)
 

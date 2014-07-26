@@ -24,6 +24,7 @@ void loop() {
       clockWise(5000);
     }
   }
+  delay(100);
 }
 
 void clockWise(int ms){
