@@ -17,7 +17,7 @@ class index:
 	def GET(self):
 		web.header('Content-Type', 'text/javascript')
 		params = web.input()
-		addAlarm( params.hour, params.minute )
+		addRemoveAlarms.addAlarm( params.hour, params.minute )
 
 		#Return the staged alarms back to the front end
 		return json.dumps(alarmList)
