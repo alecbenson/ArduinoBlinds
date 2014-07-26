@@ -1,7 +1,9 @@
 int incomingByte = 0;
-char incomingData[80];
-int index = 0;
-int lastIndex = 0;
+
+#include <Servo.h>
+int press1 = 0;
+Servo servo;
+
 
 void setup() {
   Serial.begin(9600);
@@ -13,18 +15,28 @@ void loop() {
   //Read in data from serial
   if (Serial.available() > 0) {
     incomingByte = Serial.read();
-    incomingData[index] = incomingByte;
-    index++;
+    Serial.println(incomingByte);
+    
+    if(incomingByte == (byte)97 ){
+      counterClockWise(5000);
+    }
+    else if(incomingByte == (byte)98 ){
+      clockWise(5000);
+    }
   }
-  
-  //If nothing has changed since last iteration, print the string
-  if(index == lastIndex && index != 0){
-    Serial.println(incomingData);
-    memset(incomingData, 0, sizeof(incomingData) );
-    index = 0;
-    lastIndex = 0;
-  }
-  
-  lastIndex = index;
-  delay(1000);
 }
+
+void clockWise(int ms){
+  servo.attach(7);
+  servo.write(160);
+  delay(ms);
+  servo.detach();
+}
+
+void counterClockWise(int ms){
+  servo.attach(7);
+  servo.write(20);
+  delay(ms);
+  servo.detach();
+}
+
