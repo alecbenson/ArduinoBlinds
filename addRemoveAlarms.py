@@ -2,6 +2,7 @@ import time
 import datetime
 import glob
 import threading
+from serial import Serial
 
 alarmList = []
 

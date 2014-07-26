@@ -1,6 +1,5 @@
 #usr/bin/python3
 
-from serial import Serial
 import addRemoveAlarms
 import sys
 import web
@@ -20,7 +19,7 @@ class index:
 		addRemoveAlarms.addAlarm( params.hour, params.minute )
 
 		#Return the staged alarms back to the front end
-		return json.dumps(alarmList)
+		return json.dumps(addRemoveAlarms.alarmList)
 		
 
 if __name__ == "__main__":
