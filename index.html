@@ -1,0 +1,20 @@
+<html>
+
+	<head>
+	<h1> Window Blind Control Panel </h1>
+	</head>
+
+	<body>
+		<form id="#alarmPanel">
+			Hour: <input type="number" min="0" max="24" name="hour">
+			Minute: <input type="number" min="0" max="60" name="minute">
+			<br>
+			<input type="button" onClick="triggerBlind()" value="Set Timer" name="setTimer" />
+		</form>
+
+		<div id="confirm"></div>
+	</body>
+</html>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="alarm.js"></script>
