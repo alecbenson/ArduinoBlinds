@@ -33,4 +33,5 @@ def serialWrite(hour, minute):
 	ser.write('a')
 	print(hour + ":" + minute);
 	return "console.log('ALARM SET FOR: ' + " + hour + "+ ':' +" + minute + ");"
+	ser.close()
 
