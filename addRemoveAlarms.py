@@ -24,7 +24,7 @@ def checkTime():
 			removeAlarm(0)
 
 	#check the time again in 60 seconds
-	threading.Timer(1, checkTime).start()
+	threading.Timer(60, checkTime).start()
 
 #Sends a signal to the arduino that it needs to move
 def triggerAlarm(hour, minute):
