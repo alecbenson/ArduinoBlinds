@@ -1,12 +1,11 @@
 function triggerBlind(){
         var hostname = window.location.hostname;
-        var fullTime = $('#desiredTime').val().split(":");
-        var setHour = fullTime[0];
-        var setMinute = fullTime[1];
+        var fullTime = $('#desiredTime').val();
+        var continuous = ~~$('#repeating').is(':checked');
         
         $.ajax({
-                url: "http://" + hostname + ":9234/",
-                data: {hour: setHour, minute: setMinute},
+                url: "http://" + hostname + ":42034/",
+                data: {time: fullTime, repeat: continuous},
                 dataType: 'jsonp',
                 success: function(result){
                         $('#confirm').text("Alarm set!");

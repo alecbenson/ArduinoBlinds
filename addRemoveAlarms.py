@@ -3,8 +3,11 @@ import datetime
 import threading
 from serial import Serial
 import glob
+import xml.etree.ElementTree as ET
 
 alarmList = []
+tree = ET.parse('savedAlarms.xml')
+root = tree.getroot()
 
 #Checks to see if an alarm needs to be triggered
 def checkTime():
@@ -19,22 +22,47 @@ def checkTime():
 		nextAlarmSplit = splitParsedTime(nextAlarm)
 
 		#If it is time to trigger the next alarm..
-		if compareTime(parsedTime, nextAlarm) >= 0:
+		if compareTime(parsedTime, nextAlarm) == 0:
 			print("Triggering alarm: " + nextAlarm)
 			triggerAlarm()
 			removeAlarm(0)
-		else:
-			print("")
+		#Add saved alarms back after midnight
+		if compareTime(parsedTime, "00:01") == 0:
+			addSavedAlarms()
 
 	#check the time again in 60 seconds
 	threading.Timer(60, checkTime).start()
 
 #adds an alarm to the list of alarms
-def addAlarm(hour, minute):
-	alarmTime = parseTime(hour,minute)
+def addAlarm( time, continuous):
+	if(continuous):
+		saveAlarm(time)
+
+	if time in alarmList:
+		return
+
+	alarmTime = time
 	alarmList.append(alarmTime)
 	alarmList.sort(compareTime)
 	print("Added alarm with time " + alarmTime)
+
+#Save an alarm to savedAlarms.xml
+def saveAlarm( time ):
+	for alarm in root:
+		if alarm.get('time') == time:
+			return
+
+	newAlarm = ET.Element("alarm")
+	newAlarm.set("time",time)
+	root.append(newAlarm)
+	tree.write("savedAlarms.xml")
+	print("Saved repeating alarm")
+
+#import saved alarms from savedAlarms.xml into the list of alarms
+def addSavedAlarms():
+	for alarm in root:
+		addTime = alarm.get('time')
+		addAlarm( addTime, False)
 
 #removes an alarm from the list of alarms
 def removeAlarm(index):
@@ -74,5 +102,4 @@ def triggerAlarm():
 
 	time.sleep(1)
 	ser.write('b')
-
 	ser.close()
