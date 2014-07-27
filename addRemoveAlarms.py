@@ -102,7 +102,7 @@ def triggerAlarm( alarm ):
 	port = port[0]
 	ser = Serial( port, 9600, timeout=1)
 	print("Sent trigger signal to: " + ser.portstr)
-	action = splitParsedTime(alarm)[2]
+	action = int(splitParsedTime(alarm)[2])
 	time.sleep(1)
 
 	if action == 1:
