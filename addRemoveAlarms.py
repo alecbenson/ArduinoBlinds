@@ -23,6 +23,8 @@ def checkTime():
 			print("Triggering alarm: " + nextAlarm)
 			triggerAlarm()
 			removeAlarm(0)
+		else:
+			print("")
 
 	#check the time again in 60 seconds
 	threading.Timer(60, checkTime).start()
@@ -51,14 +53,14 @@ def compareTime(time1, time2):
 	time1 = splitParsedTime(time1)
 	time2 = splitParsedTime(time2)
 
-	if time1[0] > time2[0]:
+	if int(time1[0]) > int(time2[0]):
 		return 1
-	elif time1[0] < time2[0]:
+	elif int(time1[0]) < int(time2[0]):
 		return -1
 	else:
-		if time1[1] > time2[1]:
+		if int(time1[1]) > int(time2[1]):
 			return 1
-		elif time1[1] < time2[1]: 
+		elif int(time1[1]) < int(time2[1]): 
 			return -1
 		else:
 			return 0

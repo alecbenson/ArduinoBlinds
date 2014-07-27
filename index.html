@@ -11,10 +11,9 @@
 
 	<body>
 		<form id="#alarmPanel">
-			Hour: <input type="number" min="0" max="24" name="hour">
-			Minute: <input type="number" min="0" max="59" name="minute">
+			Hour: <input type="time" id="desiredTime"></input>
 			<br>
-			<input type="button" onClick="triggerBlind()" value="Set Timer" name="setTimer" />
+			<input type="button" onClick="triggerBlind()" value="Set Timer" id="setTimer" /></input>
 		</form>
 
 		<div id="confirm"></div>
