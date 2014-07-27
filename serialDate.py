@@ -21,8 +21,9 @@ class index:
 
                 #Parse our json and remove the quotation marks at the begining and end
                 time = json.dumps( params.time )[1:-1]
-                repeat = int(json.dumps( params.repeat )[1:-1] )
-                addRemoveAlarms.addAlarm( time, repeat)
+                repeat = int( json.dumps( params.repeat )[1:-1] )
+                action = int( json.dumps( params.action )[1:-1] )
+                addRemoveAlarms.addAlarm( time, action, repeat)
 
                 #Return the staged alarms back to the front end
                 return '%s(%s)' % (callbackName, addRemoveAlarms.alarmList)

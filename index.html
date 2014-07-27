@@ -11,10 +11,16 @@
 
 	<body>
 		<form id="#alarmPanel">
-			Hour: <input type="time" id="desiredTime"></input>
+			Time: <input type="time" id="desiredTime"></input>
 			<br>
-			<input type="button" onClick="triggerBlind()" value="Set Timer" id="setTimer" />
+			<select id="openClose">
+			  <option value="1">Open</option>
+			  <option value="0">Close</option>
+			</select>
 			<input id="repeating" value="1" type="checkbox"/>Repeat Daily:</input>
+			<hr>
+			<input type="button" onClick="triggerBlind()" value="Set Timer" id="setTimer" />
+
 		</form>
 
 		<div id="confirm"></div>

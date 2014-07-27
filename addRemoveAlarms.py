@@ -24,7 +24,7 @@ def checkTime():
 		#If it is time to trigger the next alarm..
 		if compareTime(parsedTime, nextAlarm) >= 0:
 			print("Triggering alarm: " + nextAlarm)
-			triggerAlarm()
+			triggerAlarm( nextAlarm )
 			removeAlarm(0)
 		#Add saved alarms back after midnight
 		if compareTime(parsedTime, "00:01") == 0:
@@ -34,26 +34,28 @@ def checkTime():
 	threading.Timer(60, checkTime).start()
 
 #adds an alarm to the list of alarms
-def addAlarm( time, continuous):
+def addAlarm( time, action, continuous):
 	if(continuous):
-		saveAlarm(time)
+		saveAlarm(time, action)
 
-	if time in alarmList:
+	alarmTime = time + ":" + str(action)
+	if alarmTime in alarmList:
 		return
 
-	alarmTime = time
+
 	alarmList.append(alarmTime)
 	alarmList.sort(compareTime)
-	print("Added alarm with time " + alarmTime)
+	print("Added alarm with time " + time)
 
 #Save an alarm to savedAlarms.xml
-def saveAlarm( time ):
+def saveAlarm( time, action ):
 	for alarm in root:
 		if alarm.get('time') == time:
 			return
 
 	newAlarm = ET.Element("alarm")
 	newAlarm.set("time",time)
+	newAlarm.set("action", str(action) )
 	root.append(newAlarm)
 	tree.write("savedAlarms.xml")
 	print("Saved repeating alarm")
@@ -62,7 +64,8 @@ def saveAlarm( time ):
 def addSavedAlarms():
 	for alarm in root:
 		addTime = alarm.get('time')
-		addAlarm( addTime, False)
+		action = int(alarm.get('action'))
+		addAlarm( addTime, action, False)
 
 #removes an alarm from the list of alarms
 def removeAlarm(index):
@@ -94,12 +97,17 @@ def compareTime(time1, time2):
 			return 0
 
 #Sends a signal to the arduino that it needs to move
-def triggerAlarm():
+def triggerAlarm( alarm ):
 	port = glob.glob("/dev/ttyACM*")
 	port = port[0]
 	ser = Serial( port, 9600, timeout=1)
 	print("Sent trigger signal to: " + ser.portstr)
-
+	action = splitParsedTime(alarm)[2]
 	time.sleep(1)
-	ser.write('b')
+
+	if action == 1:
+		ser.write('b')
+	else:
+		ser.write('a')
+
 	ser.close()
