@@ -22,7 +22,7 @@ def checkTime():
 		nextAlarmSplit = splitParsedTime(nextAlarm)
 
 		#If it is time to trigger the next alarm..
-		if compareTime(parsedTime, nextAlarm) == 0:
+		if compareTime(parsedTime, nextAlarm) >= 0:
 			print("Triggering alarm: " + nextAlarm)
 			triggerAlarm()
 			removeAlarm(0)
