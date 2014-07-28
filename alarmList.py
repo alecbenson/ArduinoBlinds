@@ -46,18 +46,18 @@ class AlarmList:
 
         #check for queued alarms
         def check(self):
+                print("Checked alarm list at " + time[2] )
                 time = self.getLocalTime()
+                midnight = "01:00" #whatever
+                if time[2] == midnight:
+                        self.importSavedAlarms()
+
                 if len( self.list ) != 0:
-                        print("Checked alarm list at " + time[2] )
                         nextAlarm = self.list[0]
 
                         if nextAlarm.time <= time[2] :
                                 nextAlarm.trigger()
                                 self.remove(0)
-
-                        midnight = "00:01"
-                        if time[2] == midnight:
-                                self.importSavedAlarms()
 
                 threading.Timer( self.interval, self.check ).start()
 
