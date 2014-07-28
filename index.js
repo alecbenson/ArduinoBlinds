@@ -5,7 +5,7 @@ function triggerBlind(){
         var openClose = ~~$('#openClose').val()
         
         $.ajax({
-                url: "http://" + hostname + ":42034/",
+                url: "http://" + "alec.blindtest.com" + ":1234/",
                 data: {time: fullTime, repeat: continuous, action: openClose},
                 dataType: 'jsonp',
                 success: function(result){

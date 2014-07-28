@@ -1,20 +1,21 @@
 #usr/bin/python3
-
-import addRemoveAlarms
 import sys
 import web
 import json
+from alarm import Alarm
+from alarmList import AlarmList
 
 urls = (
-        '/', 'index'
+        '/', 'Index'
 )
 
-#starts the alarm checking thread
-addRemoveAlarms.checkTime()
+alarmList = AlarmList(60)
+alarmList.check() #check for triggerable alarms
 
 #handles the web service
-class index:
+class Index:
         def GET(self):
+                global alarmList
                 web.header('Content-Type', 'application/javascript')
                 callbackName = web.input(callback='callback').callback
                 params = web.input()
@@ -23,11 +24,13 @@ class index:
                 time = json.dumps( params.time )[1:-1]
                 repeat = int( json.dumps( params.repeat )[1:-1] )
                 action = int( json.dumps( params.action )[1:-1] )
-                addRemoveAlarms.addAlarm( time, action, repeat)
+
+                alarm = Alarm(time, action, repeat)
+                alarmList.add(alarm)
+                dalist = ['this','test']
 
                 #Return the staged alarms back to the front end
-                return '%s(%s)' % (callbackName, addRemoveAlarms.alarmList)
-
+                return '%s(%s)' % (callbackName, alarmList.prettyAlarmList() )
 
 if __name__ == "__main__":
         app = web.application(urls, globals() )
