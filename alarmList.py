@@ -1,6 +1,7 @@
 import time
 from alarm import Alarm
 import threading
+import xml.etree.ElementTree as ET
 
 class AlarmList:
         def __init__(self, interval):
@@ -38,16 +39,18 @@ class AlarmList:
 
         #import saved alarms from savedAlarms.xml into the list of alarms
         def importSavedAlarms(self):
+                tree = ET.parse('savedAlarms.xml')
+                root = tree.getroot()
                 for alarm in root:
                         time = alarm.get('time')
                         action = alarm.get('action')
-                        savedAlarm = alarm(time, action, True)
+                        savedAlarm = Alarm(time, action, True)
                         self.add(savedAlarm)
 
         #check for queued alarms
         def check(self):
-                print("Checked alarm list at " + time[2] )
                 time = self.getLocalTime()
+                print("Checked alarm list at " + time[2] )
                 midnight = "01:00" #whatever
                 if time[2] == midnight:
                         self.importSavedAlarms()
