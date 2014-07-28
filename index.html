@@ -1,4 +1,5 @@
 
+<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="index.js"></script>
 
@@ -6,30 +7,29 @@
 <html>
 
 	<head>
-	<h1> Window Blind Control Panel </h1>
+		<h1 class="basic-grey"> Window Blind Control Panel </h1>
 	</head>
 
 	<body>
-		<form id="#alarmPanel">
-			Time: <input type="time" id="desiredTime"></input>
+		<form id="#alarmPanel" class="basic-grey">
+			At: <input type="time" id="desiredTime"></input>
 			<br>
 			<select id="openClose">
-			  <option value="1">Open</option>
-			  <option value="0">Close</option>
+			  <option value="1">Make the blinds open</option>
+			  <option value="0">Make the blinds close</option>
 			</select>
-			<input id="repeating" value="1" type="checkbox"/>Repeat Daily:</input>
-			<hr>
-			<input type="button" onClick="triggerBlind()" value="Set Timer" id="setTimer" />
+			<input id="repeating" value="1" type="checkbox"/>Daily</input>
+			<input type="button" class=' button' onClick="triggerBlind()" value="Set Timer" id="setTimer" />
 
 		</form>
 
-		<div id="confirm"></div>
+		<div id="confirm" class="basic-grey textarea"></div>
 
-		<div id="alarmList" hidden>
-			<h3> Scheduled Alarms: </h3>
-			<ul class="alarms">
-			</ul>
-		</div>
+			<div id="alarmList" hidden class="basic-grey">
+				<h3> Scheduled Alarms: </h3>
+				<ul class="alarms">
+				</ul>
+			</div>
 
 	</body>
 </html>

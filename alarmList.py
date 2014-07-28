@@ -1,15 +1,10 @@
-import datetime
+import time
 from alarm import Alarm
 import threading
 
 class AlarmList:
         def __init__(self, interval):
                 self.list = []
-                self.now = datetime.datetime.now() 
-                self.hour = self.now.hour
-                self.minute = self.now.minute
-                self.parsed = str(self.hour) + ":" + str(self.minute)
-                self.object = Alarm( self.parsed )
                 self.interval = interval
 
         #adds an alarm to the list of alarms
@@ -24,12 +19,22 @@ class AlarmList:
                 self.list.append( alarm )
                 #self.list.sort( self.compare )
                 self.list.sort( key=lambda x: x.time)
-                self.check()
                 print("Added alarm with time " + alarm.time )
 
         #removes an alarm from the list of alarms
         def remove(self, index ):
                 self.list.pop(index)
+
+        def getLocalTime(self):
+                timeElements = []
+                localTime = time.localtime()
+                hour = str(localTime[3]).zfill(2)
+                minute = str(localTime[4]).zfill(2)
+                parsed = hour + ":" + minute
+                timeElements.append(hour)
+                timeElements.append(minute)
+                timeElements.append(parsed)
+                return timeElements
 
         #import saved alarms from savedAlarms.xml into the list of alarms
         def importSavedAlarms(self):
@@ -41,16 +46,17 @@ class AlarmList:
 
         #check for queued alarms
         def check(self):
+                time = self.getLocalTime()
                 if len( self.list ) != 0:
-                        print("Checked alarm list at " + self.object.time )
+                        print("Checked alarm list at " + time[2] )
                         nextAlarm = self.list[0]
 
-                        if nextAlarm.time <= self.object.time :
+                        if nextAlarm.time <= time[2] :
                                 nextAlarm.trigger()
                                 self.remove(0)
 
                         midnight = "00:01"
-                        if self.object.time == midnight:
+                        if time[2] == midnight:
                                 self.importSavedAlarms()
 
                 threading.Timer( self.interval, self.check ).start()
