@@ -82,13 +82,13 @@
     height:100px;
 }
 .basic-grey .button {
-    background: #E27575;
+    background: #3399FF;
     border: none;
     padding: 5px;
     color: #FFF;
     box-shadow: 1px 1px 5px #B6B6B6;
     border-radius: 3px;
-    text-shadow: 1px 1px 1px #9E3F3F;
+    text-shadow: 1px 1px 1px #0066CC;
     cursor: pointer;
 }
 
@@ -100,9 +100,10 @@
 .medium {
     font-size: 75%;
     margin-right: 5px;
+    margin-bottom: 10px;
 }
 .basic-grey .button:hover {
-    background: #CF7A7A
+    background: #66CCFF
 }
 
 ul {
@@ -111,4 +112,8 @@ ul {
 
 li {
     margin: 1%;
+}
+
+body {
+    width: 100%;
 }
