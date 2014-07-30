@@ -18,6 +18,16 @@
     margin: -10px -15px 30px -10px;;
     color: #888;
 }
+
+.basic-grey h3 {
+    font-size: 10px;
+    padding: 0px 0px 10px 40px;
+    display: block;
+    border-bottom:1px solid #E4E4E4;
+    margin: -10px -15px 30px -10px;;
+    color: #888;
+}
+
 .basic-grey h1>span {
     display: block;
     font-size: 11px;
@@ -50,6 +60,7 @@
     box-shadow: inset 0px 1px 4px #ECECEC;
     -moz-box-shadow: inset 0px 1px 4px #ECECEC;
     -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+    max-width: 40%;
 }
 .basic-grey textarea{
     padding: 5px 3px 3px 5px;
@@ -72,13 +83,26 @@
 .basic-grey .button {
     background: #E27575;
     border: none;
-    padding: 10px 25px 10px 25px;
+    padding: 5px;
     color: #FFF;
     box-shadow: 1px 1px 5px #B6B6B6;
     border-radius: 3px;
     text-shadow: 1px 1px 1px #9E3F3F;
     cursor: pointer;
 }
+
+.small {
+    font-size: 50%;
+    margin-right: 5px;
+}
 .basic-grey .button:hover {
     background: #CF7A7A
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin: 1%;
 }

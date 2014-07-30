@@ -6,30 +6,30 @@
 
 <html>
 
-	<head>
-		<h1 class="basic-grey"> Window Blind Control Panel </h1>
-	</head>
+<head>
+	<h1 class="basic-grey"> Window Blind Control Panel </h1>
+</head>
 
-	<body>
-		<form id="#alarmPanel" class="basic-grey">
-			At: <input type="time" id="desiredTime"></input>
-			<br>
-			<select id="openClose">
-			  <option value="1">Make the blinds open</option>
-			  <option value="0">Make the blinds close</option>
-			</select>
-			<input id="repeating" value="1" type="checkbox"/>Daily</input>
-			<input type="button" class=' button' onClick="triggerBlind()" value="Set Timer" id="setTimer" />
+<body>
+	<form id="#alarmPanel" class="basic-grey">
+		At: <input type="time" id="desiredTime"></input>
+		<br>
+		<select id="openClose">
+			<option value="1">Make the blinds open</option>
+			<option value="0">Make the blinds close</option>
+		</select>
+		<input id="repeating" value="1" type="checkbox"/>Daily</input><br>
+		<input type="button" class=' button' onClick="triggerBlind()" value="Set Timer" id="setTimer" />
 
-		</form>
+		<input type="button" class=' button' onClick="toggleBlind()" value="Toggle Blinds" id="setTimer" />
 
-		<div id="confirm" class="basic-grey textarea"></div>
+	</form>
 
-			<div id="alarmList" hidden class="basic-grey">
-				<h3> Scheduled Alarms: </h3>
-				<ul class="alarms">
-				</ul>
-			</div>
+	<div id="alarmList" hidden class="basic-grey">
+		<h3> Scheduled Alarms: </h3>
+		<ul class="alarms">
+		</ul>
+	</div>
 
-	</body>
+</body>
 </html>
