@@ -15,8 +15,9 @@
     padding: 0px 0px 10px 40px;
     display: block;
     border-bottom:1px solid #E4E4E4;
-    margin: -10px -15px 30px -10px;;
+    margin: -10px -15px 30px -10px;
     color: #888;
+    text-align: center;
 }
 
 .basic-grey h3 {
@@ -46,6 +47,7 @@
     color: #888;
 }
 .basic-grey input[type="text"], .basic-grey input[type="email"], .basic-grey textarea, .basic-grey select {
+    text-align: center;
     border: 1px solid #DADADA;
     color: #888;
     height: 30px;
@@ -60,7 +62,6 @@
     box-shadow: inset 0px 1px 4px #ECECEC;
     -moz-box-shadow: inset 0px 1px 4px #ECECEC;
     -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
-    max-width: 40%;
 }
 .basic-grey textarea{
     padding: 5px 3px 3px 5px;
@@ -93,6 +94,11 @@
 
 .small {
     font-size: 50%;
+    margin-right: 5px;
+}
+
+.medium {
+    font-size: 75%;
     margin-right: 5px;
 }
 .basic-grey .button:hover {

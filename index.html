@@ -7,23 +7,35 @@
 <html>
 
 <head>
-	<h1 class="basic-grey"> Window Blind Control Panel </h1>
+	<h3 class="basic-grey"> Window Blind Control Panel </h3>
 </head>
 
 <body>
-	<form id="#alarmPanel" class="basic-grey">
-		At: <input type="time" id="desiredTime"></input>
-		<br>
-		<select id="openClose">
-			<option value="1">Make the blinds open</option>
-			<option value="0">Make the blinds close</option>
-		</select>
-		<input id="repeating" value="1" type="checkbox"/>Daily</input><br>
-		<input type="button" class=' button' onClick="triggerBlind()" value="Set Timer" id="setTimer" />
 
-		<input type="button" class=' button' onClick="toggleBlind()" value="Toggle Blinds" id="setTimer" />
+	<table class="basic-grey" style="width: 100%">
+		<caption>Controls</caption>
+		<td>
+			<form id="#alarmPanel">
+				At: <input type="time" id="desiredTime"></input>
+				<br>
+				<select id="openClose">
+					<option value="1">Make the blinds open</option>
+					<option value="0">Make the blinds close</option>
+				</select>
+				<br>
+				<input type="button" class=' button' onClick="addAlarm()" value="Set Timer" id="setTimer" />
+				<input id="repeating" value="1" type="checkbox"/>Daily</input><br>
+			</form>
+		</td>
 
-	</form>
+		<td>
+				<input type="button" class=' button medium' onClick="triggerBlinds(1)" value="Open Blinds" id="trigger" /><br>
+				<input type="button" class=' button medium' onClick="triggerBlinds(0)" value="Close Blinds" id="trigger" />
+		</td>
+
+	</table>
+
+	<br>
 
 	<div id="alarmList" hidden class="basic-grey">
 		<h3> Scheduled Alarms: </h3>

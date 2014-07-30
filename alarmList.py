@@ -18,7 +18,6 @@ class AlarmList:
                                 return 
 
                 self.list.append( alarm )
-                #self.list.sort( self.compare )
                 self.list.sort( key=lambda x: x.time)
                 print("Added alarm with time " + alarm.time )
 

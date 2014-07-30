@@ -15,7 +15,7 @@ function displayAlarms(result){
 	});
 }
 
-function triggerBlind(){
+function addAlarm(){
 	var fullTime = $('#desiredTime').val();
 	var continuous = ~~$('#repeating').is(':checked');
 	var openClose = ~~$('#openClose').val()
@@ -40,13 +40,11 @@ function getAlarms(){
 	});
 }
 
-function toggleBlind(){
+function triggerBlinds( action ){
 	$.ajax({
-		url: "http://" + hostname + port + "/toggle",
+		url: "http://" + hostname + port + "/action",
 		dataType: 'jsonp',
-		success: function(result){
-			displayAlarms(result);
-		}
+		data: {action: action},
 	});
 }
 
