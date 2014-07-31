@@ -12,7 +12,7 @@ urls = (
         '/remove', 'Remove'
         )
 
-alarmList = AlarmList(60)
+alarmList = AlarmList(6)
 alarmList.check() #check for triggerable alarms
 
 #handles the web service
@@ -57,12 +57,12 @@ class Add:
                 params = web.input()
 
                 time = json.dumps( params.time )[1:-1]
-                repeat = int( json.dumps( params.repeat )[1:-1] )
+                occurrence = json.dumps( params.occurrence )[1:-1]
                 action = int( json.dumps( params.action )[1:-1] )
 
-                alarm = Alarm(time, action, repeat)
-                alarmList.add(alarm)
-                dalist = ['this','test']
+                print(occurrence)
+                alarm = Alarm(time, action, occurrence)
+                alarm.saveAlarm()
 
                 return '%s(%s)' % (callbackName, alarmList.prettyAlarmList() )
 

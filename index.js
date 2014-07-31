@@ -3,6 +3,14 @@ var hostname = window.location.hostname;
 
 $(document).ready(function() {
 	getAlarms();
+
+	$('#repeating').change(function(){
+	    if (this.checked){
+	    	$('#desiredDate').fadeOut("slow");
+	    } else {
+	        $('#desiredDate').fadeIn("slow");
+	    }   
+	});
 })
 
 function displayAlarms(result){
@@ -17,12 +25,20 @@ function displayAlarms(result){
 
 function addAlarm(){
 	var fullTime = $('#desiredTime').val();
-	var continuous = ~~$('#repeating').is(':checked');
-	var openClose = ~~$('#openClose').val()
+	var repeating = ~~$('#repeating').is(':checked');
+	var openClose = ~~$('#openClose').val();
+	var occurrence = $('#desiredDate').val();
+
+	if(repeating){
+		occurrence = "repeating";
+	}
+
+	console.log(occurrence);
+
 
 	$.ajax({
 		url: "http://" + hostname + port + "/add",
-		data: {time: fullTime, repeat: continuous, action: openClose},
+		data: {time: fullTime, occurrence: occurrence, action: openClose},
 		dataType: 'jsonp',
 		success: function(result){
 			displayAlarms(result);

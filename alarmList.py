@@ -2,29 +2,29 @@ import time
 from alarm import Alarm
 import threading
 import xml.etree.ElementTree as ET
+import datetime
 
 class AlarmList:
         def __init__(self, interval):
-                self.list = []
                 self.interval = interval
 
-        #adds an alarm to the list of alarms
-        def add(self, alarm ):
-                if( alarm.repeat ):
-                        alarm.writeToSaved()
 
-                for addedAlarms in self.list:
-                        if addedAlarms.time == alarm.time:
-                                return 
+        #removes an alarm from the list of saved alarms
+        def remove(self, index):
+                tree = ET.parse('savedAlarms.xml')
+                root = tree.getroot()
+                time = self.getLocalTime()
+                count = 0;
+                for alarm in root:
+                        if(index != count):
+                                count += 1
+                                continue
+                        else:
+                                root.remove(alarm)
+                                break
+                tree.write('savedAlarms.xml')
 
-                self.list.append( alarm )
-                self.list.sort( key=lambda x: x.time)
-                print("Added alarm with time " + alarm.time )
-
-        #removes an alarm from the list of alarms
-        def remove(self, index ):
-                self.list.pop(index)
-
+        #retrieves the current time
         def getLocalTime(self):
                 timeElements = []
                 localTime = time.localtime()
@@ -36,38 +36,53 @@ class AlarmList:
                 timeElements.append(parsed)
                 return timeElements
 
-        #import saved alarms from savedAlarms.xml into the list of alarms
-        def importSavedAlarms(self):
+        #retrieves the current date
+        def getDate(self):
+                dateElements = []
+                date = datetime.datetime.now()
+                dateElements.append(date.year)
+                dateElements.append(date.month)
+                dateElements.append(date.day)
+                return dateElements
+
+        #checks for triggerable alarms
+        def check(self):
                 tree = ET.parse('savedAlarms.xml')
                 root = tree.getroot()
+                localTime = self.getLocalTime()
+                print("Checking alarms")
+
                 for alarm in root:
                         time = alarm.get('time')
                         action = alarm.get('action')
-                        savedAlarm = Alarm(time, action, True)
-                        self.add(savedAlarm)
+                        occurrence = alarm.get('occurrence')
+                        savedAlarm = Alarm(time, action, occurrence)
 
-        #check for queued alarms
-        def check(self):
-                time = self.getLocalTime()
-                print("Checked alarm list at " + time[2] )
-                midnight = "01:00" #whatever
-                if time[2] == midnight:
-                        self.importSavedAlarms()
-
-                if len( self.list ) != 0:
-                        nextAlarm = self.list[0]
-
-                        if nextAlarm.time <= time[2] :
-                                nextAlarm.trigger()
-                                self.remove(0)
-
+                        if localTime[2] == savedAlarm.time:
+                                print savedAlarm.getDate()
+                                if self.getDate() == savedAlarm.getDate():
+                                        savedAlarm.trigger()
+                                        alarm.remove()
+                                elif savedAlarm.getDate == "repeating":
+                                        savedAlarm.trigger()
+                        else:
+                                continue
                 threading.Timer( self.interval, self.check ).start()
+                                
 
         def prettyAlarmList(self):
+                tree = ET.parse('savedAlarms.xml')
+                root = tree.getroot()
+                time = self.getLocalTime()
                 prettyList = []
-                for alarms in self.list:
-                        action = " - Open" if alarms.action else " - Close"
-                        repeating = " - Repeating" if alarms.repeat else " - Non-repeating"
-                        formattedAlarm = alarms.time + action + repeating
+                for alarm in root:
+                        time = alarm.get('time')
+                        action = alarm.get('action')
+                        occurrence = alarm.get('occurrence')
+
+
+                        action = "Open" if action else "Close"
+                        occurrence = alarm.get('occurrence')
+                        formattedAlarm = time + "---" + action + "---" + occurrence
                         prettyList.append(formattedAlarm)
                 return prettyList
