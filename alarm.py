@@ -12,8 +12,6 @@ class Alarm:
 		self.minute = int(time.split(":")[1])
 		self.occurrence = occurrence;
 
-		#If the date is not repeating, it will have 3 components
-
 
 	#Save an alarm to savedAlarms.xml
 	def saveAlarm(self):
@@ -21,7 +19,10 @@ class Alarm:
 		root = tree.getroot()
 		for alarm in root:
 			if alarm.get('time') == self.time:
-				return
+				if alarm.get('occurrence') == self.occurrence:
+					return
+				if alarm.get('occurrence') == "repeating" or self.occurrence == "repeating":
+					return
 
 		newAlarm = ET.Element("alarm")
 		newAlarm.set("time", self.time)
@@ -54,8 +55,3 @@ class Alarm:
 			ser.write('a') #Close the blinds
 
 		ser.close()
-
-
-
-
-#changed writetoSaved to saveAlarm

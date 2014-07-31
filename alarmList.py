@@ -77,12 +77,11 @@ class AlarmList:
                 prettyList = []
                 for alarm in root:
                         time = alarm.get('time')
-                        action = alarm.get('action')
+                        action = int(alarm.get('action'))
                         occurrence = alarm.get('occurrence')
 
-
-                        action = "Open" if action else "Close"
+                        action = "open" if action else "close"
                         occurrence = alarm.get('occurrence')
-                        formattedAlarm = time + "---" + action + "---" + occurrence
+                        formattedAlarm = "The blinds will " + action + " at " + time + " (" + occurrence + ")"
                         prettyList.append(formattedAlarm)
                 return prettyList

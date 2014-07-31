@@ -12,10 +12,10 @@ urls = (
         '/remove', 'Remove'
         )
 
-alarmList = AlarmList(6)
-alarmList.check() #check for triggerable alarms
+alarmList = AlarmList(60)
+alarmList.check()
 
-#handles the web service
+#Immedietly open or close the blinds
 class Action:
         def GET(self):
                 global alarmList
@@ -32,6 +32,7 @@ class Action:
                         closeAlarm.trigger()
                 return '%s(%s)' % (callbackName, "console.log('Action completed')" )
 
+#Retrieve a list of alarms
 class GetAlarms:
         def GET(self):
                 global alarmList
@@ -39,6 +40,7 @@ class GetAlarms:
                 callbackName = web.input(callback='callback').callback
                 return '%s(%s)' % (callbackName, alarmList.prettyAlarmList() )
 
+#Remove the alarm at the specified index
 class Remove:
         def GET(self):
                 global alarmList
@@ -49,6 +51,7 @@ class Remove:
                 alarmList.remove( index )
                 return '%s(%s)' % (callbackName, alarmList.prettyAlarmList() )
 
+#Add an alarm to the saved alarms
 class Add:
         def GET(self):
                 global alarmList

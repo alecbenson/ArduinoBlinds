@@ -29,7 +29,7 @@ function addAlarm(){
 	var openClose = ~~$('#openClose').val();
 	var occurrence = $('#desiredDate').val();
 
-	if(repeating){
+	if(repeating || occurrence == ""){
 		occurrence = "repeating";
 	}
 
