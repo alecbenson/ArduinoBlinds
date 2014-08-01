@@ -13,7 +13,11 @@ urls = (
         )
 
 alarmList = AlarmList(60)
-alarmList.check()
+
+if __name__ == "__main__":
+        alarmList.check()
+        app = web.application(urls, globals() )
+        app.run()
 
 #Immedietly open or close the blinds
 class Action:
@@ -68,7 +72,3 @@ class Add:
                 alarm.saveAlarm()
 
                 return '%s(%s)' % (callbackName, alarmList.prettyAlarmList() )
-
-if __name__ == "__main__":
-        app = web.application(urls, globals() )
-        app.run()

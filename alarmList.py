@@ -50,23 +50,24 @@ class AlarmList:
                 tree = ET.parse('savedAlarms.xml')
                 root = tree.getroot()
                 localTime = self.getLocalTime()
+                index = 0
                 print("Checking alarms")
+                if len(root) != 0:
+                        for alarm in root:
+                                time = alarm.get('time')
+                                action = alarm.get('action')
+                                occurrence = alarm.get('occurrence')
+                                savedAlarm = Alarm(time, action, occurrence)
 
-                for alarm in root:
-                        time = alarm.get('time')
-                        action = alarm.get('action')
-                        occurrence = alarm.get('occurrence')
-                        savedAlarm = Alarm(time, action, occurrence)
-
-                        if localTime[2] == savedAlarm.time:
-                                print savedAlarm.getDate()
-                                if self.getDate() == savedAlarm.getDate():
-                                        savedAlarm.trigger()
-                                        alarm.remove()
-                                elif savedAlarm.getDate() == "repeating":
-                                        savedAlarm.trigger()
-                        else:
-                                continue
+                                if localTime[2] == savedAlarm.time:
+                                        if self.getDate() == savedAlarm.getDate():
+                                                savedAlarm.trigger()
+                                                self.remove(index)
+                                        elif savedAlarm.getDate() == "repeating":
+                                                savedAlarm.trigger()
+                                else:
+                                        index += 1
+                                        continue
                 threading.Timer( self.interval, self.check ).start()
                                 
 
