@@ -63,7 +63,7 @@ class AlarmList:
                                 if self.getDate() == savedAlarm.getDate():
                                         savedAlarm.trigger()
                                         alarm.remove()
-                                elif savedAlarm.getDate == "repeating":
+                                elif savedAlarm.getDate() == "repeating":
                                         savedAlarm.trigger()
                         else:
                                 continue
